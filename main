@@ -1,0 +1,70 @@
+class TodoItem:
+    def __init__(self, task):
+        self.task = task
+        self.completed = False
+
+class TodoList:
+    def __init__(self):
+        self.items = []
+
+    def add_item(self, task):
+        item = TodoItem(task)
+        self.items.append(item)
+
+    def remove_item(self, index):
+        if index >= 0 and index < len(self.items):
+            del self.items[index]
+        else:
+            print("无效的索引。")
+
+    def mark_completed(self, index):
+        if index >= 0 and index < len(self.items):
+            self.items[index].completed = True
+        else:
+            print("无效的索引。")
+
+    def show_list(self):
+        if len(self.items) == 0:
+            print("待办事项列表为空。")
+        else:
+            print("待办事项列表：")
+            for index, item in enumerate(self.items):
+                status = "已完成" if item.completed else "未完成"
+                print(f"{index+1}. {item.task} - {status}")
+
+print("待办事项管理器命令行工具")
+
+todo_list = TodoList()
+
+while True:
+    print("\n请选择操作：")
+    print("1. 添加待办事项")
+    print("2. 查看待办事项列表")
+    print("3. 标记事项完成")
+    print("4. 删除事项")
+    print("5. 退出程序")
+
+    choice = input("请选择操作（输入数字）：")
+
+    if choice == '5':
+        print("谢谢使用，再见！")
+        break
+
+    if choice == '1':
+        task = input("请输入待办事项：")
+        todo_list.add_item(task)
+        print("待办事项已添加。")
+
+    elif choice == '2':
+        todo_list.show_list()
+
+    elif choice == '3':
+        index = int(input("请输入要标记为完成的事项索引："))
+        todo_list.mark_completed(index - 1)
+
+    elif choice == '4':
+        index = int(input("请输入要删除的事项索引："))
+        todo_list.remove_item(index - 1)
+
+    else:
+        print("无效的选择，请重新输入。")
